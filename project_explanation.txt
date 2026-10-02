@@ -1,0 +1,31 @@
+Hyundai Hub Project Overview
+============================
+
+1. Main Goals of the Application
+--------------------------------
+The primary goal of Hyundai Hub is to digitize and streamline the vehicle service booking experience for Hyundai owners. It acts as a premium, secure portal where clients can register their vehicles, choose services (e.g., oil changes, inspections), select their preferred local agency and time slot, and securely book appointments. The platform also provides an Admin and Agent dashboard to manage users, agencies, and the service schedule seamlessly.
+
+2. How We Use Keycloak (Authentication & Security)
+--------------------------------------------------
+To ensure enterprise-level security, we replaced the custom, self-hosted login system with Keycloak. 
+Keycloak acts as a dedicated Identity and Access Management (IAM) server.
+- The React frontend uses `keycloak-js` to redirect users to a secure Keycloak login portal.
+- All user registration, password resets, and login authentications happen directly on Keycloak.
+- Keycloak generates a secure JSON Web Token (JWT), which the frontend attaches to all API requests.
+- Our Node.js backend verifies this JWT securely using Keycloak's public keys. This separates the concern of identity management from our core business logic.
+
+3. How We Use OCR (Optical Character Recognition)
+-------------------------------------------------
+To eliminate tedious manual data entry, the app features an automated vehicle registration system using Tesseract.js OCR.
+- When adding a new vehicle, a user simply uploads a photo of their "Carte Grise" (vehicle registration document).
+- The OCR engine analyzes the image on the client side, reading both French and Arabic text patterns.
+- It automatically extracts critical details using Regular Expressions, such as the License Plate (Matricule), VIN/Chassis Number, Make, Model, and Year.
+- This provides a "wow" factor and extreme convenience during the booking flow.
+
+4. How We Use OTP (One-Time Password)
+-------------------------------------
+While Keycloak handles the main user login security, we use our own custom OTP system specifically for Appointment Confirmation.
+- Once a user builds their booking (Vehicle + Service + Agency + Time), the app requires a final confirmation to prevent spam or accidental bookings.
+- The Node.js backend generates a secure 6-digit code and emails it to the user via Nodemailer.
+- The user must enter this code to finalize the appointment. 
+- This ensures that the person making the booking actually has access to the registered email address at the exact time of booking.

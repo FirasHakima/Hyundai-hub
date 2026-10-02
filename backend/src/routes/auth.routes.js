@@ -1,0 +1,14 @@
+const router = require("express").Router();
+const ctrl = require("../controllers/auth.controller");
+const { auth } = require("../middlewares/auth");
+router.post("/register",             ctrl.register);
+router.post("/verify-registration",  ctrl.verifyRegistration);
+router.get("/verify-email",          ctrl.verifyEmail);
+router.post("/login",                ctrl.login);
+router.post("/login/verify",         ctrl.verifyLogin);
+router.post("/forgot-password",      ctrl.forgotPassword);
+router.post("/reset-password",       ctrl.resetPassword);
+router.delete("/account",            auth, ctrl.deleteAccount);
+router.post("/change-email/request", auth, ctrl.requestEmailChange);
+router.post("/change-email/confirm", auth, ctrl.confirmEmailChange);
+module.exports = router;

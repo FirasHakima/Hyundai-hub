@@ -1,0 +1,4 @@
+{
+  "ignore": ["uploads", "node_modules", "frontend"],
+  "delay": 2500
+}

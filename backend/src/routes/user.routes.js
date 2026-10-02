@@ -1,0 +1,13 @@
+const router = require("express").Router();
+const ctrl = require("../controllers/user.controller");
+const notifCtrl = require("../controllers/notification.controller");
+const { auth } = require("../middlewares/auth");
+router.get("/profile",              auth, ctrl.getProfile);
+router.put("/profile",              auth, ctrl.updateProfile);
+router.get("/vehicles",             auth, ctrl.getVehicles);
+router.post("/vehicles",            auth, ctrl.addVehicle);
+router.delete("/vehicles/:id",      auth, ctrl.deleteVehicle);
+router.get("/notifications",        auth, notifCtrl.getNotifications);
+router.patch("/notifications/read", auth, notifCtrl.markAllRead);
+router.patch("/notifications/:id/read", auth, notifCtrl.markRead);
+module.exports = router;

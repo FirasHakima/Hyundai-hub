@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const ctrl = require('../controllers/appointments.controller');
+const { auth, requireRole } = require('../middlewares/auth');
+router.get('/',                auth, ctrl.list);
+router.get('/services',        auth, ctrl.listServices);
+router.get('/agencies',        auth, ctrl.listAgencies);
+router.post('/',               auth, ctrl.create);
+router.post('/:id/confirm-otp',auth, ctrl.confirmWithOTP);
+router.patch('/:id/status',    auth, requireRole('AGENT','ADMIN'), ctrl.updateStatus);
+router.delete('/:id',          auth, ctrl.cancel);
+module.exports = router;
